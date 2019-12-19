@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wheel</string>
+    <string name="app_name">wheelmyway</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -13,17 +13,4 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-
-    <string name="menu_map">Map</string>
-    <string name="menu_search_foundation">Foundations</string>
-    <string name="menu_ask_help">Ask for help</string>
-    <string name="menu_list_don">List of donations</string>
-    <string name="menu_list_association">Associations</string>
-
-    <string name="access_token" translatable="false">pk.eyJ1IjoidGFjaGltYSIsImEiOiJjazRrNTltYjUxd3JhM21xcTJtbHplNHl2In0.p8Th6dTUeWrTvUDAO5bOBw</string>
-    <string name="search_foundation_hint">search foundation</string>
-    <string name="search">search</string>
-    <string name="user_location_permission_explanation">user_location_permission_explanation</string>
-    <string name="user_location_permission_not_granted">user_location_permission_not_granted</string>
-
 </resources>
