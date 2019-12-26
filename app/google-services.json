@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "322496693016",
+    "firebase_url": "https://wheelmyway-irisi2.firebaseio.com",
+    "project_id": "wheelmyway-irisi2",
+    "storage_bucket": "wheelmyway-irisi2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322496693016:android:c6d57202373996f267546d",
+        "android_client_info": {
+          "package_name": "com.example.wheel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322496693016-6oblu50tkoc31q8g0v417vaqvsa86gk6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4QTeD3fH_92FzTJgbR5-509psNUxQwrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322496693016-6oblu50tkoc31q8g0v417vaqvsa86gk6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
