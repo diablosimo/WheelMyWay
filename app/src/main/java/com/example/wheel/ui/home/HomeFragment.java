@@ -24,10 +24,10 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     TextView conditon;
-    Button foggy,sunny;
+    Button foggy, sunny;
 
-    DatabaseReference mRootRef= FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mCondRef= mRootRef.child("condition");
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mCondRef = mRootRef.child("condition");
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,33 +41,31 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        conditon= root.findViewById(R.id.textviewCondition);
-        sunny= root.findViewById(R.id.btnsunny);
-        foggy= root.findViewById(R.id.btnfoggy);
+        conditon = root.findViewById(R.id.textviewCondition);
+        sunny = root.findViewById(R.id.btnsunny);
+        foggy = root.findViewById(R.id.btnfoggy);
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-mCondRef.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        String text= dataSnapshot.getValue(String.class);
-        conditon.setText(text);
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-});
-    sunny.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mCondRef.setValue("sunny");
-        }
-    });
+        mCondRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                conditon.setText(text);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        sunny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCondRef.setValue("sunny");
+            }
+        });
         foggy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
