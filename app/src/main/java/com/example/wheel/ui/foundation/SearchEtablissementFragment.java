@@ -1,17 +1,6 @@
 package com.example.wheel.ui.foundation;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,45 +11,38 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.example.wheel.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.wheel.R;
 import com.example.wheel.model.CategorieEtablissement;
 import com.example.wheel.model.Etablissement;
 import com.example.wheel.model.Service;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchEtablissementFragment extends Fragment {
-    private SearchEtablissementViewModel mViewModel;
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mCatRef = mRootRef.child("categorieEtablissement");
-    DatabaseReference mEtabRef = mRootRef.child("etablissement");
-    Spinner category;
-    EditText foundationName;
-    Button search;
-    ListView listViewFoundations;
-    ArrayAdapter<CategorieEtablissement> adapter;
-    public List<CategorieEtablissement> categorieEtablissements = new ArrayList<>();
-    CategorieEtablissement selected;
-    ArrayList<Etablissement> etablissements = new ArrayList<>();
-
-
-    public static SearchEtablissementFragment newInstance() {
-        return new SearchEtablissementFragment();
-    }
-
-    public SearchEtablissementFragment x() {
-        return this;
-    }
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mCatRef = mRootRef.child("categorieEtablissement");
+    private DatabaseReference mEtabRef = mRootRef.child("etablissement");
+    private Spinner category;
+    private EditText foundationName;
+    private ListView listViewFoundations;
+    private ArrayAdapter<CategorieEtablissement> adapter;
+    private List<CategorieEtablissement> categorieEtablissements = new ArrayList<>();
+    private CategorieEtablissement selected;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,26 +50,25 @@ public class SearchEtablissementFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_etablissement_fragment, container, false);
         category = root.findViewById(R.id.sp_category);
         foundationName = root.findViewById(R.id.et_foundation_name);
-        search = root.findViewById(R.id.btn_search);
-        search = root.findViewById(R.id.btn_search);
+        Button search = root.findViewById(R.id.btn_search);
         listViewFoundations = root.findViewById(R.id.list_etablissement);
 
         mCatRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot catSnapshot : dataSnapshot.getChildren()) {
                     CategorieEtablissement categorieEtablissement = catSnapshot.getValue(CategorieEtablissement.class);
-                    categorieEtablissement.setId(Long.parseLong(catSnapshot.getKey()));
+                    assert categorieEtablissement != null;
+                    categorieEtablissement.setId(Long.parseLong(Objects.requireNonNull(catSnapshot.getKey())));
                     categorieEtablissements.add(categorieEtablissement);
                 }
 
-                adapter = new ArrayAdapter<CategorieEtablissement>(getContext(), R.layout.spinner, categorieEtablissements);
+                adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.spinner, categorieEtablissements);
                 category.setAdapter(adapter);
                 category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         selected = categorieEtablissements.get(position);
-                        long k = selected.getId();
                     }
 
                     @Override
@@ -108,8 +89,8 @@ public class SearchEtablissementFragment extends Fragment {
                 query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (foundationName.getText().toString() != null && !foundationName.getText().toString().isEmpty()) {
-                            Query query1 = mEtabRef.orderByChild("nom").equalTo(foundationName.getText().toString());
+                        if (!foundationName.getText().toString().isEmpty()) {
+                            Query query1 = mEtabRef.orderByChild("nom").startAt(foundationName.getText().toString()).endAt(foundationName.getText().toString() + "\uf8ff");
                             query1.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,9 +120,9 @@ public class SearchEtablissementFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Etablissement etablissement = (Etablissement) parent.getItemAtPosition(position);
-                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
                 FoundationFragment mFrag = new FoundationFragment();
-                mFrag.etablissement = etablissement;
+                mFrag.setEtablissement(etablissement);
                 t.replace(R.id.nav_host_fragment, mFrag);
                 t.addToBackStack(null);
                 t.commit();
@@ -152,17 +133,19 @@ public class SearchEtablissementFragment extends Fragment {
     }
 
     private void getEtablissement(DataSnapshot dataSnapshot) {
-        etablissements = new ArrayList<>();
-        Etablissement etablissement = new Etablissement();
+        ArrayList<Etablissement> etablissements = new ArrayList<>();
+        Etablissement etablissement;
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
             etablissement = snapshot.getValue(Etablissement.class);
             List<Service> services = new ArrayList<>();
             for (DataSnapshot snapshot1 : snapshot.child("service").getChildren()) {
                 Service service = snapshot1.getValue(Service.class);
-                service.setId(Long.parseLong(snapshot1.getKey()));
+                assert service != null;
+                service.setId(Long.parseLong(Objects.requireNonNull(snapshot1.getKey())));
                 services.add(service);
             }
-            etablissement.setId(Long.parseLong(snapshot.getKey()));
+            assert etablissement != null;
+            etablissement.setId(Long.parseLong(Objects.requireNonNull(snapshot.getKey())));
             etablissement.setServices(services);
             etablissements.add(etablissement);
             System.out.println(etablissement);
@@ -171,12 +154,6 @@ public class SearchEtablissementFragment extends Fragment {
         listViewFoundations.setAdapter(adapter);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SearchEtablissementViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 
 }

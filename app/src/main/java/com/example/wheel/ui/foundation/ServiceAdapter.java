@@ -15,22 +15,23 @@ import com.example.wheel.R;
 import com.example.wheel.model.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ServiceAdapter extends ArrayAdapter<Service> {
-    private List<Service> etablissements;
-    Context context;
+    private List<Service> services;
+    private Context context;
 
-    public ServiceAdapter(List<Service> data, Context context) {
+    ServiceAdapter(List<Service> data, Context context) {
         super(context, R.layout.installation_row_item, data);
-        this.etablissements = data;
+        this.services = data;
         this.context = context;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String nom = getItem(position).getNom();
-        boolean estAccessible=getItem(position).isEstAccessible();
+        String nom = Objects.requireNonNull(getItem(position)).getNom();
+        boolean estAccessible = Objects.requireNonNull(getItem(position)).isEstAccessible();
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.service_row_item, parent, false);
         TextView viewNom = convertView.findViewById(R.id.tv_service);

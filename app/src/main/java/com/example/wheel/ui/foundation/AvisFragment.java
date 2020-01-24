@@ -1,15 +1,14 @@
 package com.example.wheel.ui.foundation;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.wheel.R;
 import com.example.wheel.model.Reclamation;
@@ -21,20 +20,17 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class AvisFragment extends Fragment {
-    ArrayList<Reclamation> reclamations;
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mRecRef = mRootRef.child("reclamation");
-    long foundationId;
-    ListView lv_reclamations;
+    private ArrayList<Reclamation> reclamations;
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mRecRef = mRootRef.child("reclamation");
+    private long foundationId;
+    private ListView lv_reclamations;
 
     public AvisFragment() {
-    }
-
-    public AvisFragment(int contentLayoutId) {
-        super(contentLayoutId);
     }
 
     public AvisFragment(long foundationId) {
@@ -56,7 +52,8 @@ public class AvisFragment extends Fragment {
                 Reclamation reclamation;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     reclamation = snapshot.getValue(Reclamation.class);
-                    reclamation.setId(Long.parseLong(snapshot.getKey()));
+                    assert reclamation != null;
+                    reclamation.setId(Long.parseLong(Objects.requireNonNull(snapshot.getKey())));
                     reclamations.add(reclamation);
                 }
                 ReclamationAdapter reclamationAdapter=new ReclamationAdapter(reclamations,getContext());

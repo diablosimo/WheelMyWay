@@ -14,10 +14,11 @@ import com.example.wheel.R;
 import com.example.wheel.model.Installation;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InstallationAdapter extends ArrayAdapter<Installation> {
     private List<Installation> installations;
-    Context context;
+    private Context context;
 
     public InstallationAdapter(List<Installation> data, Context context) {
         super(context, R.layout.installation_row_item, data);
@@ -28,8 +29,8 @@ public class InstallationAdapter extends ArrayAdapter<Installation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String nom = getItem(position).getNom();
-        String emplacement = getItem(position).getEmplacement();
+        String nom = Objects.requireNonNull(getItem(position)).getNom();
+        String emplacement = Objects.requireNonNull(getItem(position)).getEmplacement();
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.installation_row_item, parent, false);
         TextView viewNomAccess = convertView.findViewById(R.id.tv_access_nom);

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.wheel.R;
-import com.example.wheel.model.Etablissement;
 import com.example.wheel.model.Reclamation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,12 +19,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ReclamationAdapter extends ArrayAdapter<Reclamation> {
-
     private ArrayList<Reclamation> reclamations;
-    Context context;
-    String handicapeName = "";
+    private Context context;
+    private String handicapeName = "";
 
 
     public ReclamationAdapter(ArrayList<Reclamation> data, Context context) {
@@ -37,9 +36,9 @@ public class ReclamationAdapter extends ArrayAdapter<Reclamation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String objet = getItem(position).getObjet();
-        String message = getItem(position).getMessage();
-        final long handicapId = getItem(position).getHandicape_id();
+        String objet = Objects.requireNonNull(getItem(position)).getObjet();
+        String message = Objects.requireNonNull(getItem(position)).getMessage();
+        final long handicapId = Objects.requireNonNull(getItem(position)).getHandicape_id();
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.reclamation_row_item, parent, false);
         TextView tvObjet = convertView.findViewById(R.id.tv_objet);
