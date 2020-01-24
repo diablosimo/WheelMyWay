@@ -1,5 +1,7 @@
 package com.example.wheel.ui.foundation;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -49,11 +51,15 @@ public class SearchEtablissementFragment extends Fragment {
     ArrayAdapter<CategorieEtablissement> adapter;
     public List<CategorieEtablissement> categorieEtablissements = new ArrayList<>();
     CategorieEtablissement selected;
-    ArrayList<Etablissement> etablissements=new ArrayList<>();
+    ArrayList<Etablissement> etablissements = new ArrayList<>();
 
 
     public static SearchEtablissementFragment newInstance() {
         return new SearchEtablissementFragment();
+    }
+
+    public SearchEtablissementFragment x() {
+        return this;
     }
 
     @Override
@@ -62,6 +68,7 @@ public class SearchEtablissementFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_etablissement_fragment, container, false);
         category = root.findViewById(R.id.sp_category);
         foundationName = root.findViewById(R.id.et_foundation_name);
+        search = root.findViewById(R.id.btn_search);
         search = root.findViewById(R.id.btn_search);
         listViewFoundations = root.findViewById(R.id.list_etablissement);
 
@@ -125,34 +132,33 @@ public class SearchEtablissementFragment extends Fragment {
 
                     }
                 });
-
-
-
             }
         });
 
         listViewFoundations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Etablissement etablissement= (Etablissement) parent.getItemAtPosition(position);
-                Intent intent=new Intent(getContext(), FoundationActivity.class);
-                intent.putExtra("etablissement", new Gson().toJson(etablissement));
-
-                startActivity(intent);
+                Etablissement etablissement = (Etablissement) parent.getItemAtPosition(position);
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                FoundationFragment mFrag = new FoundationFragment();
+                mFrag.etablissement = etablissement;
+                t.replace(R.id.nav_host_fragment, mFrag);
+                t.addToBackStack(null);
+                t.commit();
             }
         });
 
         return root;
     }
 
-    private void getEtablissement(DataSnapshot dataSnapshot){
-        etablissements=new ArrayList<>();
-        Etablissement etablissement=new Etablissement();
-        for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
-            etablissement=snapshot.getValue(Etablissement.class);
-            List<Service> services=new ArrayList<>();
-            for (DataSnapshot snapshot1:snapshot.child("service").getChildren()){
-                Service service=snapshot1.getValue(Service.class);
+    private void getEtablissement(DataSnapshot dataSnapshot) {
+        etablissements = new ArrayList<>();
+        Etablissement etablissement = new Etablissement();
+        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+            etablissement = snapshot.getValue(Etablissement.class);
+            List<Service> services = new ArrayList<>();
+            for (DataSnapshot snapshot1 : snapshot.child("service").getChildren()) {
+                Service service = snapshot1.getValue(Service.class);
                 service.setId(Long.parseLong(snapshot1.getKey()));
                 services.add(service);
             }
@@ -161,7 +167,7 @@ public class SearchEtablissementFragment extends Fragment {
             etablissements.add(etablissement);
             System.out.println(etablissement);
         }
-        FoundationAdapter adapter=new FoundationAdapter(etablissements,getContext());
+        FoundationAdapter adapter = new FoundationAdapter(etablissements, getContext());
         listViewFoundations.setAdapter(adapter);
     }
 
