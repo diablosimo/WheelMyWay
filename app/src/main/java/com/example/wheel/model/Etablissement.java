@@ -13,7 +13,8 @@ public class Etablissement implements Serializable {
     private float label;
     private float lng;
     private float lat;
-    private long categorieEtablissementId;
+    private long categorieEtablissement_id;
+    private String image;
     private List<Service> services;
 
     public Etablissement() {
@@ -25,7 +26,7 @@ public class Etablissement implements Serializable {
         this.adresse = adresse;
     }
 
-    public Etablissement(String nom, String adresse, String description, boolean estApprouve, float label, float lng, float lat, long categorieEtablissementId, List<Service> service) {
+    public Etablissement(String nom, String adresse, String description, boolean estApprouve, float label, float lng, float lat, long categorieEtablissement_id, List<Service> service,String image) {
         this.nom = nom;
         this.adresse = adresse;
         this.description = description;
@@ -33,8 +34,9 @@ public class Etablissement implements Serializable {
         this.label = label;
         this.lng = lng;
         this.lat = lat;
-        this.categorieEtablissementId = categorieEtablissementId;
+        this.categorieEtablissement_id = categorieEtablissement_id;
         this.services = service;
+        this.image=image;
     }
 
     public long getId() {
@@ -101,12 +103,20 @@ public class Etablissement implements Serializable {
         this.lat = lat;
     }
 
-    public long getCategorieEtablissementId() {
-        return categorieEtablissementId;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategorieEtablissementId(long categorieEtablissementId) {
-        this.categorieEtablissementId = categorieEtablissementId;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public long getCategorieEtablissement_id() {
+        return categorieEtablissement_id;
+    }
+
+    public void setCategorieEtablissement_id(long categorieEtablissement_id) {
+        this.categorieEtablissement_id = categorieEtablissement_id;
     }
 
     public List<Service> getServices() {
@@ -134,7 +144,7 @@ public class Etablissement implements Serializable {
                 ", label=" + label +
                 ", lng=" + lng +
                 ", lat=" + lat +
-                ", categorieEtablissementId=" + categorieEtablissementId +
+                ", categorieEtablissement_id=" + categorieEtablissement_id +
                 ", services=" + services +
                 '}';
     }
