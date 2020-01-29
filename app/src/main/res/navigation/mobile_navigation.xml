@@ -30,10 +30,20 @@
         android:label="@string/menu_ask_help"
         tools:layout="@layout/ask_help_fragment" />
     <fragment
-        android:id="@+id/nav_list_don"
+        android:id="@+id/nav_demandedon"
         android:name="com.example.wheel.ui.don.ListDonFragment"
-        android:label="@string/menu_list_don"
+        android:label="@string/demandedons"
         tools:layout="@layout/list_don_fragment" />
+    <fragment
+        android:id="@+id/nav_don"
+        android:name="com.example.wheel.ui.don.Dons"
+        android:label="@string/dons"
+        tools:layout="@layout/dons_fragment" />
+    <fragment
+        android:id="@+id/nav_list_don"
+        android:name="com.example.wheel.ui.don.AjouterDon"
+        android:label="@string/ajoutdon"
+        tools:layout="@layout/ajouter_don_fragment" />
     <fragment
         android:id="@+id/nav_list_association"
         android:name="com.example.wheel.ui.association.AssociationFragment"
