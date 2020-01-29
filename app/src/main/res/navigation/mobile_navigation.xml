@@ -36,7 +36,7 @@
         tools:layout="@layout/list_don_fragment" />
     <fragment
         android:id="@+id/nav_don"
-        android:name="com.example.wheel.ui.don.Dons"
+        android:name="com.example.wheel.ui.don.Don"
         android:label="@string/dons"
         tools:layout="@layout/dons_fragment" />
     <fragment

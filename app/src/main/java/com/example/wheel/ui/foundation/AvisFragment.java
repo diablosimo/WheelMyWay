@@ -52,7 +52,7 @@ public class AvisFragment extends Fragment implements ReclamationDialog.Reclamat
                 openDialog();
             }
         });
-        final Query query = mRecRef.orderByChild("etablissement_id").equalTo(foundationId).orderByKey();
+        final Query query = mRecRef.orderByChild("etablissement_id").equalTo(foundationId);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

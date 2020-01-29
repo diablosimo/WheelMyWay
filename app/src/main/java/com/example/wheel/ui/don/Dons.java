@@ -1,95 +1,120 @@
 package com.example.wheel.ui.don;
 
-import java.util.Date;
+import androidx.lifecycle.ViewModelProviders;
 
-public class Don {
-    private String date_don;
-    private Long diametre_roue;
-    private Boolean estPris;
-    private Long largeur;
-    private String modele;
-    private Long poids;
-    private Long volontaire_id;
+import android.os.Bundle;
 
-    public Don(String date_don, Long diametre_roue, Boolean estPris, Long largeur, String modele, Long poids, Long volontaire_id) {
-        this.date_don = date_don;
-        this.diametre_roue = diametre_roue;
-        this.estPris = estPris;
-        this.largeur = largeur;
-        this.modele = modele;
-        this.poids = poids;
-        this.volontaire_id = volontaire_id;
-    }
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-    public Don() {
-    }
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.Toast;
 
-    public String getDate_don() {
-        return date_don;
-    }
+import com.example.wheel.R;
+import com.example.wheel.model.Session;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-    public void setDate_don(String date_don) {
-        this.date_don = date_don;
-    }
+import java.util.ArrayList;
 
-    public Long getDiametre_roue() {
-        return diametre_roue;
-    }
+public class Dons extends Fragment {
 
-    public void setDiametre_roue(Long diametre_roue) {
-        this.diametre_roue = diametre_roue;
-    }
 
-    public Boolean getEstPris() {
-        return estPris;
-    }
+    Query query;
+    RecyclerView recyclerView;
+    ArrayList<Don> list;
+    donsAdapter adapter;
 
-    public void setEstPris(Boolean estPris) {
-        this.estPris = estPris;
-    }
 
-    public Long getLargeur() {
-        return largeur;
-    }
+    private DonsViewModel mViewModel;
 
-    public void setLargeur(Long largeur) {
-        this.largeur = largeur;
-    }
-
-    public String getModele() {
-        return modele;
-    }
-
-    public void setModele(String modele) {
-        this.modele = modele;
-    }
-
-    public Long getPoids() {
-        return poids;
-    }
-
-    public void setPoids(Long poids) {
-        this.poids = poids;
-    }
-
-    public Long getVolontaire_id() {
-        return volontaire_id;
-    }
-
-    public void setVolontaire_id(Long volontaire_id) {
-        this.volontaire_id = volontaire_id;
+    public static Dons newInstance() {
+        return new Dons();
     }
 
     @Override
-    public String toString() {
-        return "Don{" +
-                "date_don='" + date_don + '\'' +
-                ", diametre_roue=" + diametre_roue +
-                ", estPris=" + estPris +
-                ", largeur=" + largeur +
-                ", modele='" + modele + '\'' +
-                ", poids=" + poids +
-                ", volontaire_id=" + volontaire_id +
-                '}';
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        Toast.makeText(getContext(), "aa2", Toast.LENGTH_SHORT).show();
+
+        View root = inflater.inflate(R.layout.dons_fragment, container, false);
+        recyclerView = (RecyclerView) root.findViewById(R.id.myRecycler);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
+        query = FirebaseDatabase.getInstance().getReference().child("don");
+        list = new ArrayList<Don>();
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Long largeur = dataSnapshot1.child("largeur").getValue(Long.class);
+                    Long id = dataSnapshot1.child("volontaire_id").getValue(Long.class);
+
+                    Long diametre = dataSnapshot1.child("diametre_roue").getValue(Long.class);
+                    Long poids = dataSnapshot1.child("poids").getValue(Long.class);
+                    String modele = dataSnapshot1.child("modele").getValue(String.class);
+                    String date = dataSnapshot1.child("date_don").getValue(String.class);
+                    Boolean estpris = dataSnapshot1.child("estpris").getValue(Boolean.class);
+
+
+                    Don d = new Don();
+                    d.setVolontaire_id(id);
+                    d.setDate_don(date);
+                    d.setDiametre_roue(diametre);
+                    d.setEstPris(estpris);
+                    d.setModele(modele);
+                    d.setPoids(poids);
+                    d.setLargeur(largeur);
+                    list.add(d);
+                    // Toast.makeText(getContext(), list.get(0).getModele()+"zzzzzzz", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+             /* list.get(1).setDemandeId(Long.valueOf(0));
+               list.get(1).setDemandeId(Long.valueOf(1));
+*/
+                //   Toast.makeText(getContext(), session.getusename(), Toast.LENGTH_SHORT).show();
+                adapter = new donsAdapter(getContext(), list);
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Opsss.... Something is wrong", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        return root;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(this).get(DonsViewModel.class);
+        // TODO: Use the ViewModel
+    }
+
 }
