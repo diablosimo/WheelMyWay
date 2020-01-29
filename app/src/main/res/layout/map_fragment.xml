@@ -17,19 +17,17 @@
             android:layout_height="match_parent"
             mapbox:mapbox_cameraTargetLat="31.629055"
             mapbox:mapbox_cameraTargetLng="-8.055828"
-            mapbox:mapbox_cameraZoom="12"/>
+            mapbox:mapbox_cameraZoom="12">
 
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="#D3D3D3"
-            android:enabled="true"
-            android:text="Start navigation"
-            android:textColor="#ffffff"
-            mapbox:layout_constraintStart_toStartOf="parent"
-            mapbox:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_navigation"
+                android:visibility="invisible" />
+        </com.mapbox.mapboxsdk.maps.MapView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -2,11 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/foundation_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/foundation_fragment"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/i"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="362dp"
             android:layout_margin="10dp"
-            android:background="@drawable/cards">
+            android:background="@drawable/white_cards">
 
             <ImageView
                 android:id="@+id/imv_foundation"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/image_non_disponible"
                 android:scaleType="fitXY"
+                android:src="@drawable/image_non_disponible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -80,9 +80,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cards"
-            android:orientation="horizontal"
             android:layout_margin="10dp"
+            android:background="@drawable/white_cards"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
@@ -113,7 +113,7 @@
             android:layout_width="395dp"
             android:layout_height="270dp"
             android:layout_margin="10dp"
-            android:background="@drawable/cards"
+            android:background="@drawable/white_cards"
             android:padding="10dp" />
 
     </LinearLayout>
