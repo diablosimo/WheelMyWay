@@ -1,30 +1,33 @@
 package com.example.wheel.ui.map;
 
 import android.annotation.SuppressLint;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wheel.R;
+import com.example.wheel.model.AccessibiliteRoute;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
-import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
-import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -37,21 +40,19 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
-
-public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener {
     private static final double ZOOM = 15.0;
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -60,7 +61,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
 
 
     private static final String TAG = "DirectionsActivity";
-    View root;
     private PermissionsManager permissionsManager;
     private Point origin;
 
@@ -69,6 +69,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     // variables needed to initialize navigation
     private FloatingActionButton navButton;
     private MarkerOptions destinationOptions;
+
+    private DatabaseReference mAccessibilityRef = FirebaseDatabase.getInstance().getReference().child("accessibiliteRoute");
+
 
     public MapFragment() {
     }
@@ -84,12 +87,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mAccessibilityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot accessSnapshot : dataSnapshot.getChildren()) {
+                    AccessibiliteRoute accessibiliteRoute = accessSnapshot.getValue(AccessibiliteRoute.class);
+                    assert accessibiliteRoute != null;
+                    accessibiliteRoute.setId(Objects.requireNonNull(accessSnapshot.getKey()));
+                    //accessibiliteRoutes.add(accessibiliteRoute);
+                    addAccessibilityMarker(accessibiliteRoute);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
         Mapbox.getInstance(getContext(), getString(R.string.access_token));
-        root = inflater.inflate(R.layout.map_fragment, container, false);
+        View root = inflater.inflate(R.layout.map_fragment, container, false);
         mapView = (MapView) root.findViewById(R.id.mapView);
         navButton = root.findViewById(R.id.btn_nav);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
 
         return root;
     }
@@ -119,7 +140,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
             navButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "hi", Toast.LENGTH_LONG).show();
                     origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
                     getRoute(origin, destination);
                 }
@@ -140,65 +160,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
                 });
 
 
-//        mapboxMap.setStyle(getString(R.string.mapbox_style_outdoors), new Style.OnStyleLoaded() {
-//            @Override
-//            public void onStyleLoaded(@NonNull Style style) {
-//                enableLocationComponent(style);
-//                //addDestinationIconSymbolLayer(style);
-//
-//                //mapboxMap.addOnMapClickListener(MapFragment.this);
-//
-////                button.setOnClickListener(new View.OnClickListener() {
-////                    @Override
-////                    public void onClick(View v) {
-////                        boolean simulateRoute = true;
-////                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-////                                .directionsRoute(currentRoute)
-////                                .shouldSimulateRoute(simulateRoute)
-////                                .build();
-////                        // Call this method with Context from within an Activity
-////                        NavigationLauncher.startNavigation(getActivity(), options);
-////                    }
-////                });
-//            }
-//        });
-
-
     }
 
-    private void addDestinationIconSymbolLayer(@NonNull Style loadedMapStyle) {
-        loadedMapStyle.addImage("destination-icon-id",
-                BitmapFactory.decodeResource(this.getResources(), R.drawable.mapbox_marker_icon_default));
-        GeoJsonSource geoJsonSource = new GeoJsonSource("destination-source-id");
-        loadedMapStyle.addSource(geoJsonSource);
-        SymbolLayer destinationSymbolLayer = new SymbolLayer("destination-symbol-layer-id", "destination-source-id");
-        destinationSymbolLayer.withProperties(
-                iconImage("destination-icon-id"),
-                iconAllowOverlap(true),
-                iconIgnorePlacement(true)
-        );
-        loadedMapStyle.addLayer(destinationSymbolLayer);
-    }
-
-    @SuppressWarnings({"MissingPermission"})
-    @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-
-        Point destinationPoint = Point.fromLngLat(point.getLongitude(), point.getLatitude());
-        Point originPoint = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),
-                locationComponent.getLastKnownLocation().getLatitude());
-
-        GeoJsonSource source = mapboxMap.getStyle().getSourceAs("destination-source-id");
-        if (source != null) {
-            source.setGeoJson(Feature.fromGeometry(destinationPoint));
-        }
-
-        getRoute(originPoint, destinationPoint);
-//        navButton.setEnabled(true);
-//        navButton.setBackgroundResource(R.color.mapbox_blue);
-
-        return true;
-    }
 
     private void zoomToDestinationPosition(LatLng latLng) {
         mapboxMap.setCameraPosition(new CameraPosition.Builder()
@@ -206,6 +169,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
                 .zoom(ZOOM)
                 .build());
     }
+
+    private void addAccessibilityMarker(AccessibiliteRoute accessibiliteRoute) {
+        if (accessibiliteRoute.isEst_approvue() == true) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(accessibiliteRoute.getLat(), accessibiliteRoute.getIng()));
+            markerOptions.icon(IconFactory.getInstance(getContext()).fromResource(R.drawable.ic_action_location));
+            this.mapboxMap.addMarker(markerOptions);
+        }
+    }
+
 
     private void getRoute(Point origin, Point destination) {
         NavigationRoute.builder(getContext())
