@@ -69,7 +69,7 @@ public class MyPropositions extends Fragment {
                     Don d = new Don();
                     Long largeur = dataSnapshot1.child("largeur").getValue(Long.class);
                     Long id = dataSnapshot1.child("volontaire_id").getValue(Long.class);
-                    Long donid = dataSnapshot1.child("donId").getValue(Long.class);
+                    Long donid = dataSnapshot1.child("donid").getValue(Long.class);
 
                     Long diametre = dataSnapshot1.child("diametre_roue").getValue(Long.class);
                     Long poids = dataSnapshot1.child("poids").getValue(Long.class);

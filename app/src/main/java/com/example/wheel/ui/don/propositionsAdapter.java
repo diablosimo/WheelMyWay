@@ -74,6 +74,7 @@ public class propositionsAdapter extends RecyclerView.Adapter<propositionsAdapte
     }
 
     public void deletedemandedon(final int position) {
+
         Toast.makeText(context, dons.get(position) + "in 111111 delete function", Toast.LENGTH_SHORT).show();
 
         Don don = new Don();
@@ -83,7 +84,7 @@ public class propositionsAdapter extends RecyclerView.Adapter<propositionsAdapte
         Toast.makeText(context, position + "in delete function", Toast.LENGTH_SHORT).show();
 
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("don").orderByChild("donid").equalTo(1);
+        Query query = FirebaseDatabase.getInstance().getReference().child("don").orderByChild("donid").equalTo(dons.get(position).getDonid());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -191,6 +192,7 @@ public class propositionsAdapter extends RecyclerView.Adapter<propositionsAdapte
             DatabaseReference donRef = FirebaseDatabase.getInstance().getReference().child("don");
             DateFormat df = new SimpleDateFormat("dd/MM/yy ");
             final Date dateDemande = new Date();
+            df.format(dateDemande);
             Don d = new Don();
             d.setVolontaire_id(dons.get(position).getVolontaire_id());
             if (!largeur.getText().toString().matches(""))
@@ -215,7 +217,9 @@ public class propositionsAdapter extends RecyclerView.Adapter<propositionsAdapte
             else
                 d.setDiametre_roue(Long.valueOf("0"));
 
-            d.setDate_don(dateDemande.toString());
+            d.setDate_don(df.format(dateDemande));
+            d.setDonid(dons.get(position).getDonid());
+            d.setVolontaire_id(dons.get(position).getVolontaire_id());
             Toast.makeText(context, "" + position + ":sd " + d.getDonid() + d.getDate_don() + d.getVolontaire_id() + d.getEstPris() + d.getModele(), Toast.LENGTH_SHORT).show();
 
             donRef.addValueEventListener(new ValueEventListener() {

@@ -100,11 +100,12 @@ public class Don {
         return "Don{" +
                 "date_don='" + date_don + '\'' +
                 ", diametre_roue=" + diametre_roue +
-                ", estPris=" + estPris +
+                ", estPris='" + estPris + '\'' +
                 ", largeur=" + largeur +
                 ", modele='" + modele + '\'' +
                 ", poids=" + poids +
                 ", volontaire_id=" + volontaire_id +
+                ", donid=" + donid +
                 '}';
     }
 }
