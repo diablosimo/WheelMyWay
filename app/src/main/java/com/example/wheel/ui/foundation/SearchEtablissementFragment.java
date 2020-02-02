@@ -123,8 +123,8 @@ public class SearchEtablissementFragment extends Fragment {
                 FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
                 FoundationFragment mFrag = new FoundationFragment();
                 mFrag.setEtablissement(etablissement);
-                t.replace(R.id.nav_host_fragment, mFrag);
-                t.addToBackStack(null);
+                t.replace(R.id.nav_host_fragment, mFrag, "foundation");
+                t.addToBackStack("foundation");
                 t.commit();
             }
         });

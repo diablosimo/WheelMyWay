@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/zz">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="318dp"
+        android:layout_height="520dp"
+        android:background="#FFFFFF"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421">
+
+
+        <EditText
+            android:id="@+id/titre"
+            android:layout_width="134dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="126dp"
+            android:layout_marginEnd="135dp"
+            android:layout_marginRight="135dp"
+            android:layout_marginBottom="354dp"
+            android:ems="10"
+            android:hint="Modele"
+            android:inputType="textPersonName"
+            android:textColor="#979090"
+            android:textColorHint="#3A3A3A"
+            android:textColorLink="#00CA9D" />
+
+        <Button
+            android:id="@+id/modifier"
+            android:layout_width="142dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="89dp"
+            android:layout_marginRight="89dp"
+            android:layout_marginBottom="174dp"
+            android:background="@drawable/formbuttons"
+            android:text="Envoyer"
+            android:textColor="#FFFFFF" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="#00CA9D">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="257dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="49dp"
+                android:layout_marginLeft="49dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginBottom="4dp"
+                android:text="Personnaliser votre don"
+                android:textColor="#F1F1F1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/diametre"
+            android:layout_width="135dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="158dp"
+            android:layout_marginLeft="158dp"
+            android:layout_marginTop="192dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="290dp"
+            android:ems="10"
+            android:hint="Diamètre roues"
+            android:inputType="number"
+            android:textColor="#706E6E"
+            tools:layout_editor_absoluteX="-101dp"
+            tools:layout_editor_absoluteY="597dp" />
+
+        <EditText
+            android:id="@+id/largeur"
+            android:layout_width="95dp"
+            android:layout_height="38dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="43dp"
+            android:layout_marginLeft="43dp"
+            android:layout_marginTop="192dp"
+            android:layout_marginEnd="173dp"
+            android:layout_marginRight="173dp"
+            android:layout_marginBottom="291dp"
+            android:ems="10"
+            android:hint="Largeur"
+            android:inputType="number"
+            android:textColor="#706E6E"
+            tools:layout_editor_absoluteX="-101dp"
+            tools:layout_editor_absoluteY="597dp" />
+
+        <EditText
+            android:id="@+id/poids"
+            android:layout_width="99dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="190dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="122dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginBottom="352dp"
+            android:ems="10"
+            android:hint="Poids"
+            android:inputType="number"
+            android:textColor="#706E6E"
+            tools:layout_editor_absoluteX="-101dp"
+            tools:layout_editor_absoluteY="597dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginTop="239dp"
+            android:layout_marginEnd="101dp"
+            android:layout_marginRight="101dp"
+            android:layout_marginBottom="252dp"
+            android:text="*En Centimètre"
+            android:textColor="#00ca9d"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

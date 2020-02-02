@@ -91,6 +91,7 @@ public class FoundationFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
                 t.replace(R.id.content_fragment, fragment);
                 t.commit();

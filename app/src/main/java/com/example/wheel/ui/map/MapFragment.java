@@ -22,6 +22,8 @@ import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
@@ -61,11 +63,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     // variables for calculating and drawing a route
     private DirectionsRoute currentRoute;
     private static final String TAG = "DirectionsActivity";
+    private static final double ZOOM = 15.0;
+
     private NavigationMapRoute navigationMapRoute;
     // variables needed to initialize navigation
     private Button button;
 
-    private MapViewModel mViewModel;
+    MarkerOptions destinationOptions;
+
+    public MapFragment() {
+    }
+
+    public MapFragment(MarkerOptions options) {
+        this.destinationOptions = options;
+    }
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -80,43 +91,61 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         button = root.findViewById(R.id.startButton);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = getFragmentManager().findFragmentByTag("foundation");
+            }
+        });
+
         return root;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
+        if (this.destinationOptions != null) {
+            this.mapboxMap.addMarker(this.destinationOptions);
+            zoomToDestinationPosition(destinationOptions.getPosition());
+        }
+        mapboxMap.setStyle(Style.MAPBOX_STREETS,
+                new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+                        enableLocationComponent(style);
+                        mapboxMap.setCameraPosition(new CameraPosition.Builder().zoom(ZOOM).build());
+
+                        if (destinationOptions != null) {
+                            zoomToDestinationPosition(destinationOptions.getPosition());
+                        }
+                    }
+                });
 
 
-        mapboxMap.setStyle(getString(R.string.mapbox_style_outdoors), new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                enableLocationComponent(style);
-                //addDestinationIconSymbolLayer(style);
-
-                //mapboxMap.addOnMapClickListener(MapFragment.this);
-
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        boolean simulateRoute = true;
-//                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-//                                .directionsRoute(currentRoute)
-//                                .shouldSimulateRoute(simulateRoute)
-//                                .build();
-//                        // Call this method with Context from within an Activity
-//                        NavigationLauncher.startNavigation(getActivity(), options);
-//                    }
-//                });
-            }
-        });
+//        mapboxMap.setStyle(getString(R.string.mapbox_style_outdoors), new Style.OnStyleLoaded() {
+//            @Override
+//            public void onStyleLoaded(@NonNull Style style) {
+//                enableLocationComponent(style);
+//                //addDestinationIconSymbolLayer(style);
+//
+//                //mapboxMap.addOnMapClickListener(MapFragment.this);
+//
+////                button.setOnClickListener(new View.OnClickListener() {
+////                    @Override
+////                    public void onClick(View v) {
+////                        boolean simulateRoute = true;
+////                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
+////                                .directionsRoute(currentRoute)
+////                                .shouldSimulateRoute(simulateRoute)
+////                                .build();
+////                        // Call this method with Context from within an Activity
+////                        NavigationLauncher.startNavigation(getActivity(), options);
+////                    }
+////                });
+//            }
+//        });
 
 
     }
@@ -151,7 +180,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         getRoute(originPoint, destinationPoint);
         button.setEnabled(true);
         button.setBackgroundResource(R.color.mapbox_blue);
+
         return true;
+    }
+
+    private void zoomToDestinationPosition(LatLng latLng) {
+        mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                .target(latLng)
+                .zoom(ZOOM)
+                .build());
     }
 
     private void getRoute(Point origin, Point destination) {
@@ -197,16 +234,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
 
             locationComponent = mapboxMap.getLocationComponent();
-
             locationComponent.activateLocationComponent(LocationComponentActivationOptions.builder(
                     getContext(), loadedMapStyle).build());
 
             locationComponent.setLocationComponentEnabled(true);
-
             // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
+
             // Set the component's render mode
             locationComponent.setRenderMode(RenderMode.COMPASS);
+
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(getActivity());
@@ -226,7 +263,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     @Override
     public void onPermissionResult(boolean granted) {
         if (granted) {
-            enableLocationComponent(mapboxMap.getStyle());
+            mapboxMap.getStyle(new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    enableLocationComponent(style);
+                }
+            });
         } else {
             Toast.makeText(getContext(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
             getActivity().finish();
