@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivityForResult(intent, 1);
-
     }
 
     @Override

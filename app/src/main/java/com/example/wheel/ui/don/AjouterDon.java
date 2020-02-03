@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,16 @@ import android.widget.Toast;
 
 import com.example.wheel.R;
 import com.example.wheel.model.Session;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -67,10 +73,11 @@ public class AjouterDon extends Fragment {
         bd = FirebaseDatabase.getInstance();
         reference = bd.getReference();
         donRef = reference.child("demandeDon");
-        ajouter = (Button) root.findViewById(R.id.Ajouter);
+        ajouter = (Button) root.findViewById(R.id.modifier);
         titre = root.findViewById(R.id.titre);
         largeur = root.findViewById(R.id.largeur);
-        diametre = root.findViewById(R.id.diam);
+        diametre = root.findViewById(R.id.diametre);
+
         type = root.findViewById(R.id.type);
         message = root.findViewById(R.id.message);
         Manuelle = root.findViewById(R.id.Manuelle);
@@ -95,8 +102,12 @@ public class AjouterDon extends Fragment {
 
                 messagefinal = "Préferences : " + largeur.getText() + " ," + diametre.getText() + " ," + typetext + " \n " + urgence + " \n Message : " + message.getText();
                 // Toast.makeText(getContext(), "message :"+messagefinal, Toast.LENGTH_SHORT).show();
-                DateFormat df = new SimpleDateFormat("dd/MM/yy ");
-                final Date dateobj = new Date();
+
+                // DateFormat df = new SimpleDateFormat("dd/MM/yy ");
+                // final Date dateobj = new Date();
+                String pattern = "dd-MM-yyyy";
+                String dateobj = new SimpleDateFormat(pattern).format(new Date());
+
                 demandeDon = new DemandeDon();
                 demandeDon.setHandicape_id(Long.valueOf(session.getusename()));
                 demandeDon.setTitre(titre.getText().toString());

@@ -16,8 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.wheel.R;
 import com.example.wheel.model.Etablissement;
 import com.example.wheel.ui.map.MapFragment;
-import com.mapbox.mapboxsdk.annotations.Icon;
-import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
@@ -48,9 +46,7 @@ public class InfoFragment extends Fragment {
             public void onClick(View v) {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(etablissement.getLat(), etablissement.getLng()));
-                markerOptions.title(etablissement.getNom() + ":" + etablissement.getAdresse());
                 FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-
                 MapFragment mFrag = new MapFragment(markerOptions);
                 t.replace(R.id.nav_host_fragment, mFrag);
                 t.commit();

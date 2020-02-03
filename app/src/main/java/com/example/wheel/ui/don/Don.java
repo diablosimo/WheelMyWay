@@ -3,15 +3,19 @@ package com.example.wheel.ui.don;
 import java.util.Date;
 
 public class Don {
+    private static long demandeIdCounter = 0;
     private String date_don;
     private Long diametre_roue;
-    private Boolean estPris;
+    private String estPris;
+
     private Long largeur;
     private String modele;
     private Long poids;
     private Long volontaire_id;
+    private Long donid;
 
-    public Don(String date_don, Long diametre_roue, Boolean estPris, Long largeur, String modele, Long poids, Long volontaire_id) {
+    public Don(String date_don, Long diametre_roue, String estPris, Long largeur, String modele, Long poids, Long volontaire_id) {
+
         this.date_don = date_don;
         this.diametre_roue = diametre_roue;
         this.estPris = estPris;
@@ -22,6 +26,19 @@ public class Don {
     }
 
     public Don() {
+    }
+
+    public void setId() {
+        demandeIdCounter++;
+        this.donid = demandeIdCounter;
+    }
+
+    public Long getDonid() {
+        return donid;
+    }
+
+    public void setDonid(Long donid) {
+        this.donid = donid;
     }
 
     public String getDate_don() {
@@ -40,11 +57,12 @@ public class Don {
         this.diametre_roue = diametre_roue;
     }
 
-    public Boolean getEstPris() {
+    public String getEstPris() {
         return estPris;
     }
 
-    public void setEstPris(Boolean estPris) {
+    public void setEstPris(String estPris) {
+
         this.estPris = estPris;
     }
 
@@ -85,11 +103,14 @@ public class Don {
         return "Don{" +
                 "date_don='" + date_don + '\'' +
                 ", diametre_roue=" + diametre_roue +
-                ", estPris=" + estPris +
+                ", estPris='" + estPris + '\'' +
+
                 ", largeur=" + largeur +
                 ", modele='" + modele + '\'' +
                 ", poids=" + poids +
                 ", volontaire_id=" + volontaire_id +
+                ", donid=" + donid +
+
                 '}';
     }
 }
