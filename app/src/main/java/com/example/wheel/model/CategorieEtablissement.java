@@ -1,16 +1,5 @@
 package com.example.wheel.model;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class CategorieEtablissement {
     long id;
     String nom;
@@ -45,7 +34,7 @@ public class CategorieEtablissement {
 
     @Override
     public String toString() {
-        return  id+" "+ nom ;
+        return nom;
     }
 
 

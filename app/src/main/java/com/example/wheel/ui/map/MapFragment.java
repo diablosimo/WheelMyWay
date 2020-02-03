@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.example.wheel.R;
 import com.example.wheel.model.AccessibiliteRoute;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,24 +41,19 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
     private static final double ZOOM = 15.0;
     private MapView mapView;
     private MapboxMap mapboxMap;
     // variables for adding location layer
     private LocationComponent locationComponent;
-
-
     private static final String TAG = "DirectionsActivity";
     private PermissionsManager permissionsManager;
     private Point origin;
@@ -71,7 +65,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
     private MarkerOptions destinationOptions;
 
     private DatabaseReference mAccessibilityRef = FirebaseDatabase.getInstance().getReference().child("accessibiliteRoute");
-
 
     public MapFragment() {
     }
@@ -87,22 +80,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mAccessibilityRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot accessSnapshot : dataSnapshot.getChildren()) {
-                    AccessibiliteRoute accessibiliteRoute = accessSnapshot.getValue(AccessibiliteRoute.class);
-                    assert accessibiliteRoute != null;
-                    accessibiliteRoute.setId(Objects.requireNonNull(accessSnapshot.getKey()));
-                    //accessibiliteRoutes.add(accessibiliteRoute);
-                    addAccessibilityMarker(accessibiliteRoute);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
         Mapbox.getInstance(getContext(), getString(R.string.access_token));
         View root = inflater.inflate(R.layout.map_fragment, container, false);
@@ -115,6 +92,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
         return root;
     }
 
+    @SuppressLint({"RestrictedApi", "WrongConstant"})
+    @SuppressWarnings({"MissingPermission"})
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+        Toast.makeText(getContext(), "this", Toast.LENGTH_LONG).show();
+        return true;
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -159,6 +143,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
                     }
                 });
 
+        mAccessibilityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot accessSnapshot : dataSnapshot.getChildren()) {
+                    AccessibiliteRoute accessibiliteRoute = accessSnapshot.getValue(AccessibiliteRoute.class);
+                    assert accessibiliteRoute != null;
+                    accessibiliteRoute.setId(Objects.requireNonNull(accessSnapshot.getKey()));
+                    //accessibiliteRoutes.add(accessibiliteRoute);
+                    addAccessibilityMarker(accessibiliteRoute);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
     }
 
@@ -302,6 +302,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
-
 }
