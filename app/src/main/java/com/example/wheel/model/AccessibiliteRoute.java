@@ -7,6 +7,9 @@ public class AccessibiliteRoute {
     private Boolean est_approvue;
     private long type_id;
 
+    public AccessibiliteRoute() {
+    }
+
     public AccessibiliteRoute(String id, float ing, float lat, Boolean est_approuve, long type_id) {
         this.id = id;
         this.ing = ing;
@@ -15,7 +18,11 @@ public class AccessibiliteRoute {
         this.type_id = type_id;
     }
 
-    public AccessibiliteRoute() {
+    public AccessibiliteRoute(boolean est_approvue, float lat, float ing, Long type_id) {
+        this.est_approvue = est_approvue;
+        this.lat = lat;
+        this.ing = ing;
+        this.type_id = type_id;
     }
 
     public String getId() {

@@ -48,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener ,MapboxMap.OnMapClickListener{
+ublic class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
     private static final double ZOOM = 15.0;
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -96,7 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
     @SuppressWarnings({"MissingPermission"})
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
-        Toast.makeText(getContext(),"this",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "this", Toast.LENGTH_LONG).show();
         return true;
     }
 
