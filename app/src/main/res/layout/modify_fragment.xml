@@ -3,21 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#D5DDD8D8">
-
+    android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="311dp"
         android:layout_height="522dp"
-        android:background="#ffffff"
+        android:background="#FFFFFF"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.421">
-
         <RadioGroup
             android:id="@+id/type"
             android:layout_width="252dp"
@@ -118,7 +115,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:background="#00ca9d">
+            android:background="#00CA9D">
+
 
             <TextView
                 android:id="@+id/textView2"
@@ -136,14 +134,14 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginBottom="4dp"
-                android:text="Modifier votre demande"
-                android:textColor="#ffffff"
+                android:text="Personnaliser votre demande"
+                android:textColor="#F1F1F1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
         <EditText
-            android:id="@+id/diam"
+            android:id="@+id/diametre"
             android:layout_width="135dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"

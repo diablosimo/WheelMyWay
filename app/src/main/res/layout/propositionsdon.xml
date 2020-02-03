@@ -145,7 +145,7 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/modele"
+                android:id="@+id/titre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -201,19 +201,17 @@
             app:layout_constraintVertical_bias="1.0">
 
             <TextView
-                android:id="@+id/estpris"
+                android:id="@+id/etat"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="n'est pas encore prise" />
-
+                android:layout_weight="1" />
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/call"
                 srcCompat="@android:drawable/stat_sys_phone_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="90dp"
                 android:clickable="true"
                 android:elevation="0dp"
                 android:src="@android:drawable/stat_sys_phone_call" />

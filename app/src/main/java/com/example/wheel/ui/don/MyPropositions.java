@@ -13,11 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.wheel.R;
@@ -29,66 +24,79 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 
-public class Dons extends Fragment {
-
-
+public class MyPropositions extends Fragment {
     Query query;
     RecyclerView recyclerView;
     ArrayList<Don> list;
-    donsAdapter adapter;
+    propositionsAdapter adapter;
+    Session session;
 
+    private MyPropositionsViewModel mViewModel;
 
-    private DonsViewModel mViewModel;
-
-    public static Dons newInstance() {
-        return new Dons();
+    public static MyPropositions newInstance() {
+        return new MyPropositions();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-
-
-        View root = inflater.inflate(R.layout.dons_fragment, container, false);
-        recyclerView = (RecyclerView) root.findViewById(R.id.myRecycler);
+        session = new Session(getContext());
+        View root = inflater.inflate(R.layout.my_propositions_fragment, container, false);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView = (RecyclerView) root.findViewById(R.id.myRecycler);
+
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        query = FirebaseDatabase.getInstance().getReference().child("don");
+        query = FirebaseDatabase.getInstance().getReference().child("don").orderByChild("volontaire_id").equalTo(Long.valueOf(session.getusename()));
         list = new ArrayList<Don>();
+
+
+        Toast.makeText(getContext(), "on create", Toast.LENGTH_SHORT).show();
 
         query.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
                 list.clear();
+
+
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Don d = new Don();
-
                     Long largeur = dataSnapshot1.child("largeur").getValue(Long.class);
                     Long id = dataSnapshot1.child("volontaire_id").getValue(Long.class);
+                    Long donid = dataSnapshot1.child("donid").getValue(Long.class);
 
                     Long diametre = dataSnapshot1.child("diametre_roue").getValue(Long.class);
                     Long poids = dataSnapshot1.child("poids").getValue(Long.class);
                     String modele = dataSnapshot1.child("modele").getValue(String.class);
                     String date = dataSnapshot1.child("date_don").getValue(String.class);
                     String estpris = dataSnapshot1.child("estPris").getValue(String.class);
-
+                    String etat;
+                    if (estpris == "true")
+                        etat = "Chaise est déja prise";
+                    else
+                        etat = "Chaise n'est pas encore prise ";
+                    d.setDonid(donid);
                     d.setVolontaire_id(id);
                     d.setDate_don(date);
                     d.setDiametre_roue(diametre);
-                    d.setEstPris(estpris);
+                    d.setEstPris(etat);
                     d.setModele(modele);
                     d.setPoids(poids);
                     d.setLargeur(largeur);
                     list.add(d);
+
+
                 }
 
-                //   Toast.makeText(getContext(), session.getusename(), Toast.LENGTH_SHORT).show();
-                adapter = new donsAdapter(getContext(), list);
+
+                //      Toast.makeText(getContext(), session.getusename(), Toast.LENGTH_SHORT).show();
+                adapter = new propositionsAdapter(getContext(), list);
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
 
@@ -106,7 +114,7 @@ public class Dons extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DonsViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(MyPropositionsViewModel.class);
         // TODO: Use the ViewModel
     }
 

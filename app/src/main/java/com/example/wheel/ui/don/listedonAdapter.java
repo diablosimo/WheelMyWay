@@ -2,22 +2,18 @@ package com.example.wheel.ui.don;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.wheel.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Tag;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,14 +56,11 @@ public class listedonAdapter extends RecyclerView.Adapter<listedonAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.datedemande.setText("27/05/2020");
+        holder.datedemande.setText(demandes.get(position).getDatedemande());
         holder.titredemande.setText(demandes.get(position).getTitre());
         holder.messagedemande.setText(demandes.get(position).getMessage());
-
-
         holder.onClick(position);
         holder.onClickmodify(position);
-
     }
 
     @Override
@@ -148,24 +139,18 @@ public class listedonAdapter extends RecyclerView.Adapter<listedonAdapter.MyView
                     d_titredemande.setText(demandes.get(position).getTitre());
                     final Switch s = myDialog.findViewById(R.id.urgent);
                     final EditText largeur = myDialog.findViewById(R.id.largeur);
-                    final EditText diametre = myDialog.findViewById(R.id.diam);
+                    final EditText diametre = myDialog.findViewById(R.id.diametre);
                     final RadioGroup type = myDialog.findViewById(R.id.type);
-
                     myDialog.show();
                     Toast.makeText(context, demandes.get(position).getHandicape_id() + "aa", Toast.LENGTH_SHORT).show();
-
 
                     d_btnmodify.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(context, "ur inside ", Toast.LENGTH_SHORT).show();
                             modifieDon(position, d_titredemande, d_messagedemande, s, largeur, diametre, type);
-
-
                         }
                     });
-
-
                 }
             });
         }
@@ -184,7 +169,6 @@ public class listedonAdapter extends RecyclerView.Adapter<listedonAdapter.MyView
                 urgence = "demande urgente";
             else
                 urgence = "demande non urgente";
-
             messagefinal = "Préferences : " + largeur.getText() + " ," + diametre.getText() + " ," + typetext + " ," + urgence + " ,Message : " + message.getText();
 
             DatabaseReference donRef = FirebaseDatabase.getInstance().getReference().child("demandeDon");

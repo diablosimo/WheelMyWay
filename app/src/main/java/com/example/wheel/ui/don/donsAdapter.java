@@ -2,10 +2,13 @@ package com.example.wheel.ui.don;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.bumptech.glide.Glide;
 
 import com.example.wheel.model.volontaire;
 
@@ -14,32 +17,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wheel.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> {
-
-
     Context context;
     ArrayList<Don> dons;
     Dialog myDialog;
+
     donsAdapter.MyViewHolder myViewHolder;
 
     public donsAdapter(Context context, ArrayList<Don> demandes) {
@@ -57,8 +57,7 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.propositionsdon, parent, false);
         myViewHolder = new MyViewHolder(v);
         myDialog = new Dialog(context);
-        myDialog.setContentView(R.layout.modify_fragment);
-
+        myDialog.setContentView(R.layout.modify_proposition);
         return new MyViewHolder(v);
     }
 
@@ -71,15 +70,20 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
         holder.diametre.setText(dons.get(position).getDiametre_roue().toString() + " cm");
         holder.modele.setText(dons.get(position).getModele());
 
-          /*  if(dons.get(position).getEstPris()) {
-                holder.estpris.setText("Chaise roulante déja prise");
-                holder.estpris.setVisibility(View.VISIBLE);
-            }
+        holder.estpris.setText("test");
+        Toast.makeText(context, dons.get(position).getEstPris() + "kkkk ", Toast.LENGTH_SHORT).show();
 
-*/
 
-        holder.findVolontaire(position);
-        holder.onClick(position);
+        if (dons.get(position).getEstPris().equals("true")) {
+            holder.estpris.setText("Chaise roulante déja prise");
+        } else
+            holder.estpris.setText("Chaise roulante n'est pas encore  prise");
+
+
+        volontaire v = holder.findVolontaire(position);
+        //  holder.findVolontaire(position);
+        holder.onClick(position, v);
+
 
     }
 
@@ -89,7 +93,6 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        volontaire v;
         TextView largeur, diametre, modele, poids, date, estpris, username;
         ImageView userimg;
 
@@ -103,59 +106,54 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
 
             largeur = (TextView) itemView.findViewById(R.id.largeur);
             diametre = (TextView) itemView.findViewById(R.id.diametre);
-            modele = itemView.findViewById(R.id.modele);
+            modele = itemView.findViewById(R.id.titre);
             poids = (TextView) itemView.findViewById(R.id.poids);
             date = (TextView) itemView.findViewById(R.id.date);
-            estpris = itemView.findViewById(R.id.estpris);
+            estpris = (TextView) itemView.findViewById(R.id.etat);
+
             call = itemView.findViewById(R.id.call);
 
 
         }
 
-        public void onClick(final int position) {
+        public void onClick(final int position, final volontaire volontaire) {
             call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Toast.makeText(context, "call... ", Toast.LENGTH_SHORT).show();
-
-
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel: " + volontaire.getNum_tel()));
+                    itemView.getContext().startActivity(callIntent);
                 }
             });
         }
 
-        public void findVolontaire(final int position) {
-
-
+        public volontaire findVolontaire(final int position) {
             DatabaseReference query = FirebaseDatabase.getInstance().getReference().child("volontaire");
-
-            StorageReference mvolontaireStorageRef = FirebaseStorage.getInstance().getReference().child("volontaire");
+            final volontaire volontaire = new volontaire();
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot keyId : dataSnapshot.getChildren()) {
-                        volontaire v = new volontaire();
                         if (keyId.child("volontaire_id").getValue().equals(dons.get(position).getVolontaire_id())) {
                             String a = keyId.child("nom").getValue(String.class);
-                            v.setNom(keyId.child("nom").getValue(String.class));
+                            String b = keyId.child("image").getValue(String.class);
+                            String c = keyId.child("num_tel").getValue(String.class);
+
+                            volontaire.setNom(keyId.child("nom").getValue(String.class));
+                            volontaire.setNum_tel(c);
+                            volontaire.setImage(b);
                             username.setText(a);
-                            Toast.makeText(context, v.getNom() + " ", Toast.LENGTH_SHORT).show();
 
+                            if (volontaire.getImage() != null) {
+                                final StorageReference mvolontaireStorageRef = FirebaseStorage.getInstance().getReference().child("volontaire").child(volontaire.getImage());
+                                System.out.println(mvolontaireStorageRef.getDownloadUrl());
+                                Glide.with(context).load(mvolontaireStorageRef).centerCrop()
+                                        .into(userimg);
 
-
-                                /*            if (v.getImage() != null) {
-                                                mvolontaireStorageRef = mvolontaireStorageRef.child(etablissement.getImage());
-                                                System.out.println(mvolontaireStorageRef.getDownloadUrl());
-                                                Glide.with(this).load(mvolontaireStorageRef).centerCrop()
-                                                        .into(userimg);
-                                            }*/
-
-
+                            }
                             break;
                         }
                     }
-
-
                 }
 
                 @Override
@@ -163,12 +161,7 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
 
                 }
             });
-
-
+            return volontaire;
         }
-
-
     }
-
-
 }

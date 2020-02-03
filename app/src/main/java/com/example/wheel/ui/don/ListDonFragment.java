@@ -62,13 +62,15 @@ public class ListDonFragment extends Fragment {
                     String message = dataSnapshot1.child("message").getValue(String.class);
                     long did = dataSnapshot1.child("demandeId").getValue(Long.class);
 
-                    //  String date = dataSnapshot1.child("datedemande").getValue(String.class);
+                    String date = dataSnapshot1.child("datedemande").getValue(String.class);
+
                     DemandeDon d = new DemandeDon();
                     d.setMessage(message);
                     d.setDemandeId(did);
                     d.setHandicape_id(Long.valueOf(session.getusename()));
 
-                    // d.setDatedemande(date);
+                    d.setDatedemande(date);
+
                     d.setTitre(titre);
                     list.add(d);
                     //  Toast.makeText(getContext(), "aa2", Toast.LENGTH_SHORT).show();
