@@ -34,7 +34,7 @@ public class FoundationFragment extends Fragment {
     private TextView tvCat;
 
     private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    private StorageReference mFoundationStorageRef = FirebaseStorage.getInstance().getReference().child("etablissement");
+    private StorageReference mFoundationStorageRef;
     private String categorie = "";
 
     @Override
@@ -55,8 +55,7 @@ public class FoundationFragment extends Fragment {
         System.out.println(imvFoundation.getMaxWidth() + " " + imvFoundation.getMaxHeight());
         System.out.println(imvFoundation.getWidth() + " " + imvFoundation.getHeight());
         if (etablissement.getImage() != null) {
-            mFoundationStorageRef = mFoundationStorageRef.child(etablissement.getImage());
-            System.out.println(mFoundationStorageRef.getDownloadUrl());
+            mFoundationStorageRef = FirebaseStorage.getInstance().getReference().child("etablissement").child(etablissement.getImage());
             Glide.with(this).load(mFoundationStorageRef).centerCrop()
                     .into(imvFoundation);
         }
@@ -77,7 +76,7 @@ public class FoundationFragment extends Fragment {
 
         FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         AvisFragment mFrag = new AvisFragment(etablissement.getId());
-        t.replace(R.id.content_fragment, mFrag);
+        t.replace(R.id.content_fragment, mFrag, "REC");
         t.commit();
         switchSubFragments(btnAvis, new AvisFragment(etablissement.getId()));
         switchSubFragments(btnAccess, new AccessibilityFragment(etablissement));

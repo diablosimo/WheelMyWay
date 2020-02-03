@@ -56,6 +56,7 @@
         android:label="@string/donations"
         tools:layout="@layout/my_propositions_fragment" />
     <fragment
+
         android:id="@+id/nav_list_association"
         android:name="com.example.wheel.ui.association.AssociationFragment"
         android:label="@string/menu_list_association"

@@ -1,6 +1,7 @@
 package com.example.wheel.ui.foundation;
 
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,6 @@ public class InfoFragment extends Fragment {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(etablissement.getLat(), etablissement.getLng()));
                 FragmentTransaction t = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-
                 MapFragment mFrag = new MapFragment(markerOptions);
                 t.replace(R.id.nav_host_fragment, mFrag);
                 t.commit();

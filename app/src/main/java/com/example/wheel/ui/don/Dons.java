@@ -51,6 +51,7 @@ public class Dons extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
 
+
         View root = inflater.inflate(R.layout.dons_fragment, container, false);
         recyclerView = (RecyclerView) root.findViewById(R.id.myRecycler);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -58,15 +59,15 @@ public class Dons extends Fragment {
         recyclerView.setHasFixedSize(true);
         query = FirebaseDatabase.getInstance().getReference().child("don");
         list = new ArrayList<Don>();
+
         query.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
-
-
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Don d = new Don();
+
                     Long largeur = dataSnapshot1.child("largeur").getValue(Long.class);
                     Long id = dataSnapshot1.child("volontaire_id").getValue(Long.class);
 
@@ -76,7 +77,6 @@ public class Dons extends Fragment {
                     String date = dataSnapshot1.child("date_don").getValue(String.class);
                     String estpris = dataSnapshot1.child("estPris").getValue(String.class);
 
-
                     d.setVolontaire_id(id);
                     d.setDate_don(date);
                     d.setDiametre_roue(diametre);
@@ -85,10 +85,7 @@ public class Dons extends Fragment {
                     d.setPoids(poids);
                     d.setLargeur(largeur);
                     list.add(d);
-
-
                 }
-
 
                 //   Toast.makeText(getContext(), session.getusename(), Toast.LENGTH_SHORT).show();
                 adapter = new donsAdapter(getContext(), list);

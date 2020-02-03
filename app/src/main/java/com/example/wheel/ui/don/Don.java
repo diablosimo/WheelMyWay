@@ -7,6 +7,7 @@ public class Don {
     private String date_don;
     private Long diametre_roue;
     private String estPris;
+
     private Long largeur;
     private String modele;
     private Long poids;
@@ -14,6 +15,7 @@ public class Don {
     private Long donid;
 
     public Don(String date_don, Long diametre_roue, String estPris, Long largeur, String modele, Long poids, Long volontaire_id) {
+
         this.date_don = date_don;
         this.diametre_roue = diametre_roue;
         this.estPris = estPris;
@@ -60,6 +62,7 @@ public class Don {
     }
 
     public void setEstPris(String estPris) {
+
         this.estPris = estPris;
     }
 
@@ -101,11 +104,13 @@ public class Don {
                 "date_don='" + date_don + '\'' +
                 ", diametre_roue=" + diametre_roue +
                 ", estPris='" + estPris + '\'' +
+
                 ", largeur=" + largeur +
                 ", modele='" + modele + '\'' +
                 ", poids=" + poids +
                 ", volontaire_id=" + volontaire_id +
                 ", donid=" + donid +
+
                 '}';
     }
 }

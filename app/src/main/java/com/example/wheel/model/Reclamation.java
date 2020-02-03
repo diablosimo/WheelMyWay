@@ -1,7 +1,7 @@
 package com.example.wheel.model;
 
 public class Reclamation {
-    long id;
+    String id;
     long etablissement_id;
     long handicape_id;
     String message;
@@ -17,7 +17,7 @@ public class Reclamation {
         this.objet = objet;
     }
 
-    public Reclamation(long id, long etablissement_id, long handicape_id, String message, String objet) {
+    public Reclamation(String id, long etablissement_id, long handicape_id, String message, String objet) {
         this.id = id;
         this.etablissement_id = etablissement_id;
         this.handicape_id = handicape_id;
@@ -25,11 +25,11 @@ public class Reclamation {
         this.objet = objet;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

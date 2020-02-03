@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="311dp"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.421">
-
         <RadioGroup
             android:id="@+id/type"
             android:layout_width="252dp"
@@ -118,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:background="#00CA9D">
+
 
             <TextView
                 android:id="@+id/textView2"
