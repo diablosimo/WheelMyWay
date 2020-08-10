@@ -71,9 +71,6 @@ public class donsAdapter extends RecyclerView.Adapter<donsAdapter.MyViewHolder> 
         holder.modele.setText(dons.get(position).getModele());
 
         holder.estpris.setText("test");
-        Toast.makeText(context, dons.get(position).getEstPris() + "kkkk ", Toast.LENGTH_SHORT).show();
-
-
         if (dons.get(position).getEstPris().equals("true")) {
             holder.estpris.setText("Chaise roulante déja prise");
         } else

@@ -36,7 +36,7 @@
             android:layout_marginRight="135dp"
             android:layout_marginBottom="354dp"
             android:ems="10"
-            android:hint="Modele"
+            android:hint="@string/modele"
             android:inputType="textPersonName"
             android:textColor="#979090"
             android:textColorHint="#3A3A3A"
@@ -59,7 +59,7 @@
             android:layout_marginRight="89dp"
             android:layout_marginBottom="174dp"
             android:background="@drawable/formbuttons"
-            android:text="Envoyer"
+            android:text="@string/envoyer"
             android:textColor="#FFFFFF" />
 
         <RelativeLayout
@@ -83,7 +83,7 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginBottom="4dp"
-                android:text="Personnaliser votre don"
+                android:text="@string/personnaliser_votre_don"
                 android:textColor="#F1F1F1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="273dp"
             android:ems="10"
-            android:hint="Diamètre roues"
+            android:hint="@string/diametre_roues"
             android:inputType="number"
             android:textColor="#706E6E"
             tools:layout_editor_absoluteX="-101dp"
@@ -129,7 +129,7 @@
             android:layout_marginRight="172dp"
             android:layout_marginBottom="274dp"
             android:ems="10"
-            android:hint="Largeur"
+            android:hint="@string/largeur"
             android:inputType="number"
             android:textColor="#706E6E"
             tools:layout_editor_absoluteX="-101dp"
@@ -152,7 +152,7 @@
             android:layout_marginRight="22dp"
             android:layout_marginBottom="352dp"
             android:ems="10"
-            android:hint="Poids"
+            android:hint="@string/poids"
             android:inputType="number"
             android:textColor="#706E6E"
             tools:layout_editor_absoluteX="-101dp"
@@ -174,7 +174,7 @@
             android:layout_marginEnd="113dp"
             android:layout_marginRight="113dp"
             android:layout_marginBottom="234dp"
-            android:text="*En Centimètre"
+            android:text="@string/en_centimetre"
             android:textColor="#00ca9d"
             android:textSize="12sp" />
 

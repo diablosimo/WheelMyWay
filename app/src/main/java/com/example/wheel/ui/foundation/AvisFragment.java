@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.wheel.MainActivity;
 import com.example.wheel.R;
 import com.example.wheel.model.Reclamation;
 import com.example.wheel.ui.dialog.ReclamationDialog;
@@ -88,11 +90,10 @@ public class AvisFragment extends Fragment implements ReclamationDialog.Reclamat
         if (objet.isEmpty() || message.isEmpty()) {
             Toast.makeText(getContext(), "Veuillez saisir l'objet et le message de la réclamation", Toast.LENGTH_LONG).show();
         } else {
-            Reclamation reclamation = new Reclamation(foundationId, 0, message, objet);
+            Reclamation reclamation = new Reclamation(foundationId, MainActivity.user.getUid(), message, objet);
             String key = mRecRef.push().getKey();
             mRecRef.child(key).setValue(reclamation);
 
-            Toast.makeText(getContext(), "ok", Toast.LENGTH_LONG).show();
 
         }
     }

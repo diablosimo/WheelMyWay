@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"
-                android:text="Services Accessibles"
+                android:text="@string/services_accessibles"
                 android:textColor="#00CA9D"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"
-                android:text="Accessibilitées"
+                android:text="@string/accessibilites"
                 android:textColor="#00CA9D"
                 android:textSize="18sp"
                 android:textStyle="bold" />

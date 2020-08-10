@@ -47,14 +47,14 @@ public class FoundationFragment extends Fragment {
         Button btnInfo = v.findViewById(R.id.btn_info);
         TextView tvNom = v.findViewById(R.id.tv_nom);
         TextView tvAdresse = v.findViewById(R.id.tv_adresse);
+        TextView tvLabel = v.findViewById(R.id.tv_label);
         tvCat = v.findViewById(R.id.tv_categorie);
         ImageView imvFoundation = v.findViewById(R.id.imv_foundation);
 
         tvNom.setText(etablissement.getNom());
         tvAdresse.setText(etablissement.getAdresse());
-        System.out.println(imvFoundation.getMaxWidth() + " " + imvFoundation.getMaxHeight());
-        System.out.println(imvFoundation.getWidth() + " " + imvFoundation.getHeight());
-        if (etablissement.getImage() != null) {
+        tvLabel.setText(String.valueOf(etablissement.getLabel()));
+        if (etablissement.getImage() != null && !etablissement.getImage().isEmpty()) {
             mFoundationStorageRef = FirebaseStorage.getInstance().getReference().child("etablissement").child(etablissement.getImage());
             Glide.with(this).load(mFoundationStorageRef).centerCrop()
                     .into(imvFoundation);

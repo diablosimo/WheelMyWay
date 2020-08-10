@@ -33,7 +33,7 @@
                 android:background="@drawable/formbuttons"
                 android:backgroundTint="#00CA9D"
                 android:gravity="center"
-                android:text="AJOUTER UNE ACCESSIBILITE"
+                android:text="@string/ajouter_une_accessibilite"
                 android:textColor="#FFFFFF" />
 
             <Spinner
@@ -64,7 +64,7 @@
                     android:layout_margin="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/formbuttons"
-                    android:text="cancel"
+                    android:text="@string/annuler"
                     android:textColor="#FFFFFF" />
 
                 <Button
@@ -75,7 +75,7 @@
                     android:layout_margin="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/formbuttons"
-                    android:text="send"
+                    android:text="@string/ajouter"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 

@@ -38,17 +38,17 @@ public class ReclamationAdapter extends ArrayAdapter<Reclamation> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String objet = Objects.requireNonNull(getItem(position)).getObjet();
         String message = Objects.requireNonNull(getItem(position)).getMessage();
-        final long handicapId = Objects.requireNonNull(getItem(position)).getHandicape_id();
+        final String handicapId = Objects.requireNonNull(getItem(position)).getHandicape_id();
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.reclamation_row_item, parent, false);
         TextView tvObjet = convertView.findViewById(R.id.tv_objet);
         TextView tvMessage = convertView.findViewById(R.id.tv_message);
         final TextView tvNomHandicape = convertView.findViewById(R.id.tv_handi_nom);
-        final Query query = FirebaseDatabase.getInstance().getReference().child("handicape").orderByKey().equalTo(handicapId + "");
+        final Query query = FirebaseDatabase.getInstance().getReference().child("handicape").orderByKey().equalTo(handicapId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                handicapeName = dataSnapshot.child(handicapId + "").child("nom").getValue(String.class);
+                handicapeName = dataSnapshot.child(handicapId).child("nom").getValue(String.class);
                 if (handicapeName == null || handicapeName.isEmpty())
                     handicapeName = "Anonymous";
                 tvNomHandicape.setText(handicapeName);

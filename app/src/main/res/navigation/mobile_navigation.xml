@@ -4,16 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_map">
-
-
-
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.wheel.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
     <fragment
         android:id="@+id/nav_map"
         android:name="com.example.wheel.ui.map.MapFragment"
@@ -31,35 +21,25 @@
         tools:layout="@layout/search_etablissement_fragment" />
     <fragment
         android:id="@+id/nav_ask_help"
-        android:name="com.example.wheel.ui.askhelp.AskHelpFragment"
+        android:name="com.example.wheel.ui.help.Helpfragment"
         android:label="@string/menu_ask_help"
-        tools:layout="@layout/ask_help_fragment" />
+        tools:layout="@layout/fragment_askh" />
     tools:layout="@layout/ask_help_fragment" />
     <fragment
-        android:id="@+id/nav_demandedon"
-        android:name="com.example.wheel.ui.don.ListDonFragment"
-        android:label="@string/demandedons"
-        tools:layout="@layout/list_don_fragment" />
-    <fragment
-        android:id="@+id/nav_don"
+        android:id="@+id/nav_list_don"
         android:name="com.example.wheel.ui.don.Dons"
         android:label="@string/dons"
         tools:layout="@layout/dons_fragment" />
     <fragment
-        android:id="@+id/nav_list_don"
+        android:id="@+id/nav_list_demande_don"
+        android:name="com.example.wheel.ui.don.ListDonFragment"
+        android:label="@string/m_list_demande_don"
+        tools:layout="@layout/list_don_fragment" />
+    <fragment
+        android:id="@+id/nav_demandedon"
         android:name="com.example.wheel.ui.don.AjouterDon"
-        android:label="@string/ajoutdon"
+        android:label="@string/demandedons"
         tools:layout="@layout/ajouter_don_fragment" />
-    <fragment
-        android:id="@+id/nav_proposer_don"
-        android:name="com.example.wheel.ui.don.ProposerDon"
-        android:label="@string/proposer_don"
-        tools:layout="@layout/proposer_don_fragment" />
-    <fragment
-        android:id="@+id/nav_donations"
-        android:name="com.example.wheel.ui.don.MyPropositions"
-        android:label="@string/donations"
-        tools:layout="@layout/my_propositions_fragment" />
     <fragment
 
         android:id="@+id/nav_list_association"
@@ -67,10 +47,4 @@
         android:label="@string/menu_list_association"
         tools:layout="@layout/association_fragment" />
 
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.wheel.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
 </navigation>

@@ -207,7 +207,7 @@ public class propositionsAdapter extends RecyclerView.Adapter<propositionsAdapte
                 d.setPoids(Long.valueOf("0"));
 
             d.setModele(modele.getText().toString());
-            d.setDonid(Long.valueOf(position));
+            //d.setDonid(Long.valueOf(position));
             if (etat.isChecked())
                 d.setEstPris("true");
             else

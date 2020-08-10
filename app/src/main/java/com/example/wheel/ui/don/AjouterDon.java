@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.wheel.MainActivity;
 import com.example.wheel.R;
 import com.example.wheel.model.Session;
 
@@ -109,11 +110,9 @@ public class AjouterDon extends Fragment {
                 String dateobj = new SimpleDateFormat(pattern).format(new Date());
 
                 demandeDon = new DemandeDon();
-                demandeDon.setHandicape_id(Long.valueOf(session.getusename()));
+                demandeDon.setHandicape_id(MainActivity.user.getUid());
                 demandeDon.setTitre(titre.getText().toString());
                 demandeDon.setMessage(messagefinal);
-                demandeDon.setId();
-
                 demandeDon.setDatedemande(dateobj.toString());
 
 
@@ -124,8 +123,6 @@ public class AjouterDon extends Fragment {
                             maxid = dataSnapshot.getChildrenCount();
                             /*String a = String.valueOf(maxid)+String.valueOf(Math.random());
                             a = a.replace(".","");*/
-
-
                     }
 
                     @Override
@@ -138,8 +135,10 @@ public class AjouterDon extends Fragment {
                 if (message.getText().toString().matches("") || titre.getText().toString().matches(""))
                     Toast.makeText(getContext(), "Vous devez saisir au mois le titre et le message", Toast.LENGTH_SHORT).show();
                 else {
-                    donRef.child(String.valueOf(demandeDon.getDemandeId())).setValue(demandeDon);
-                    Toast.makeText(getContext(), "Demande Ajouté", Toast.LENGTH_SHORT).show();
+                    String key = donRef.push().getKey();
+                    demandeDon.setDemandeId(key);
+                    donRef.child(key).setValue(demandeDon);
+                    Toast.makeText(getContext(), "Demande Ajoutée", Toast.LENGTH_SHORT).show();
 
                 }
             }

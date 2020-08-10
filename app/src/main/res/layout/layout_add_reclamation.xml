@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:ems="10"
-        android:hint="Objet..."
+        android:autofillHints=""
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="@string/objet" />
 
     <EditText
         android:id="@+id/et_message"
@@ -26,7 +26,7 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Message..."
+        android:hint="@string/message"
         android:inputType="textMultiLine" />
 
 </RelativeLayout>

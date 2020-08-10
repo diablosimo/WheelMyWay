@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.wheel.MainActivity;
 import com.example.wheel.R;
 import com.example.wheel.model.Session;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +51,7 @@ public class MyPropositions extends Fragment {
 
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        query = FirebaseDatabase.getInstance().getReference().child("don").orderByChild("volontaire_id").equalTo(Long.valueOf(session.getusename()));
+        query = FirebaseDatabase.getInstance().getReference().child("don").orderByChild("volontaire_id").equalTo(MainActivity.user.getUid());
         list = new ArrayList<Don>();
 
 
@@ -68,8 +69,8 @@ public class MyPropositions extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Don d = new Don();
                     Long largeur = dataSnapshot1.child("largeur").getValue(Long.class);
-                    Long id = dataSnapshot1.child("volontaire_id").getValue(Long.class);
-                    Long donid = dataSnapshot1.child("donid").getValue(Long.class);
+                    String id = dataSnapshot1.child("volontaire_id").getValue(String.class);
+                    String donid = dataSnapshot1.child("donid").getValue(String.class);
 
                     Long diametre = dataSnapshot1.child("diametre_roue").getValue(Long.class);
                     Long poids = dataSnapshot1.child("poids").getValue(Long.class);

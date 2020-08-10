@@ -48,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-ublic class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
     private static final double ZOOM = 15.0;
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -175,6 +175,7 @@ ublic class MapFragment extends Fragment implements OnMapReadyCallback, Permissi
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(accessibiliteRoute.getLat(), accessibiliteRoute.getIng()));
             markerOptions.icon(IconFactory.getInstance(getContext()).fromResource(R.drawable.ic_action_location));
+            markerOptions.setTitle(accessibiliteRoute.getNom());
             this.mapboxMap.addMarker(markerOptions);
         }
     }

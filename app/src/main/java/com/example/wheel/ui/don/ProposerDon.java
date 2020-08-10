@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.wheel.MainActivity;
 import com.example.wheel.R;
 import com.example.wheel.model.Session;
 import com.google.firebase.database.DataSnapshot;
@@ -89,16 +90,16 @@ public class ProposerDon extends Fragment {
                 if (modele.getText().toString().matches("") || largeur.getText().toString().matches("") || poids.getText().toString().matches("") || diametre.getText().toString().matches(""))
                     Toast.makeText(getContext(), "Vous devez fournir plus d'informations", Toast.LENGTH_SHORT).show();
                 else {
-                    don.setVolontaire_id(Long.valueOf(session.getusename()));
+                    don.setVolontaire_id(MainActivity.user.getUid());
                     don.setLargeur(Long.parseLong(largeur.getText().toString()));
                     don.setDiametre_roue(Long.valueOf(diametre.getText().toString()));
                     don.setPoids(Long.valueOf(poids.getText().toString()));
                     don.setModele(modele.getText().toString());
                     don.setDate_don(dateobj.toString());
                     don.setEstPris("false");
-                    don.setId();
-
-                    reference.child(String.valueOf(don.getDonid())).setValue(don);
+                    String key = reference.push().getKey();
+                    don.setDonid(key);
+                    reference.child(key).setValue(don);
                     Toast.makeText(getContext(), "Demande Ajouté", Toast.LENGTH_SHORT).show();
 
                 }

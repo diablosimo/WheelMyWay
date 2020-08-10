@@ -49,7 +49,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
 
-            android:text="Modele"
+            android:text="@string/modele"
             android:textColor="#00CA9D"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -86,7 +86,7 @@
             android:layout_marginLeft="90dp"
             android:layout_marginBottom="8dp"
 
-            android:text="Largeur"
+            android:text="@string/largeur"
             android:textColor="#00CA9D"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -132,7 +132,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
 
-            android:text="Diamètre des roues"
+            android:text="@string/diametre_roues"
             android:textColor="#00CA9D"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -169,7 +169,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
 
-            android:text="Poids"
+            android:text="@string/poids"
             android:textColor="#00CA9D"
             android:textSize="18sp"
             android:textStyle="bold" />

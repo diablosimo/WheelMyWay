@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class DemandeDon {
-    private static long demandeIdCounter = 0;
-    private Long demandeId;
-    private Long handicape_id;
+    private String demandeId;
+    private String handicape_id;
     private String datedemande;
     private String message;
     private String titre;
@@ -14,23 +13,17 @@ public class DemandeDon {
     public DemandeDon() {
     }
 
-    public DemandeDon(Long id, String titre, String message) {
-
+    public DemandeDon(String id, String titre, String message) {
         this.handicape_id = id;
         this.titre = titre;
         this.message = message;
     }
 
-    public void setId() {
-        demandeIdCounter++;
-        this.demandeId = demandeIdCounter;
-    }
-
-    public Long getDemandeId() {
+    public String getDemandeId() {
         return demandeId;
     }
 
-    public void setDemandeId(Long a) {
+    public void setDemandeId(String a) {
         this.demandeId = a;
     }
 
@@ -42,11 +35,11 @@ public class DemandeDon {
         this.datedemande = datedemande;
     }
 
-    public Long getHandicape_id() {
+    public String getHandicape_id() {
         return handicape_id;
     }
 
-    public void setHandicape_id(Long id) {
+    public void setHandicape_id(String id) {
         this.handicape_id = id;
     }
 

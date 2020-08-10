@@ -5,6 +5,7 @@ public class AccessibiliteRoute {
     private float ing;
     private float lat;
     private Boolean est_approvue;
+    private String nom;
     private long type_id;
 
     public AccessibiliteRoute() {
@@ -18,11 +19,12 @@ public class AccessibiliteRoute {
         this.type_id = type_id;
     }
 
-    public AccessibiliteRoute(boolean est_approvue, float lat, float ing, Long type_id) {
+    public AccessibiliteRoute(boolean est_approvue, float lat, float ing, String nom, Long type_id) {
         this.est_approvue = est_approvue;
         this.lat = lat;
         this.ing = ing;
         this.type_id = type_id;
+        this.nom = nom;
     }
 
     public String getId() {
@@ -63,6 +65,15 @@ public class AccessibiliteRoute {
 
     public void setType_id(long type_id) {
         this.type_id = type_id;
+    }
+
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     @Override

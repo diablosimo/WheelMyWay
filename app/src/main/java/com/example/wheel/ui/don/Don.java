@@ -3,7 +3,6 @@ package com.example.wheel.ui.don;
 import java.util.Date;
 
 public class Don {
-    private static long demandeIdCounter = 0;
     private String date_don;
     private Long diametre_roue;
     private String estPris;
@@ -11,10 +10,10 @@ public class Don {
     private Long largeur;
     private String modele;
     private Long poids;
-    private Long volontaire_id;
-    private Long donid;
+    private String volontaire_id;
+    private String donid;
 
-    public Don(String date_don, Long diametre_roue, String estPris, Long largeur, String modele, Long poids, Long volontaire_id) {
+    public Don(String date_don, Long diametre_roue, String estPris, Long largeur, String modele, Long poids, String volontaire_id) {
 
         this.date_don = date_don;
         this.diametre_roue = diametre_roue;
@@ -28,16 +27,12 @@ public class Don {
     public Don() {
     }
 
-    public void setId() {
-        demandeIdCounter++;
-        this.donid = demandeIdCounter;
-    }
 
-    public Long getDonid() {
+    public String getDonid() {
         return donid;
     }
 
-    public void setDonid(Long donid) {
+    public void setDonid(String donid) {
         this.donid = donid;
     }
 
@@ -90,11 +85,11 @@ public class Don {
         this.poids = poids;
     }
 
-    public Long getVolontaire_id() {
+    public String getVolontaire_id() {
         return volontaire_id;
     }
 
-    public void setVolontaire_id(Long volontaire_id) {
+    public void setVolontaire_id(String volontaire_id) {
         this.volontaire_id = volontaire_id;
     }
 

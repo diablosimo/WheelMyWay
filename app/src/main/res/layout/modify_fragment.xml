@@ -36,14 +36,14 @@
                 android:id="@+id/automatique"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Automatique"
+                android:text="@string/automatique"
                 android:textColor="#706E6E" />
 
             <RadioButton
                 android:id="@+id/Manuelle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manuelle"
+                android:text="@string/manuelle"
                 android:textColor="#706E6E" />
         </RadioGroup>
 
@@ -64,7 +64,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="406dp"
             android:ems="10"
-            android:hint="Titre"
+            android:hint="@string/titre"
             android:inputType="textPersonName"
             android:textColor="#979090"
             android:textColorHint="#3A3A3A"
@@ -88,7 +88,7 @@
             android:layout_marginBottom="108dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Message"
+            android:hint="@string/message"
             android:inputType="textMultiLine"
             android:textColor="#979090" />
 
@@ -109,7 +109,7 @@
             android:layout_marginRight="78dp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/formbuttons"
-            android:text="Modifier"
+            android:text="@string/modifier"
             android:textColor="#FFFFFF" />
 
         <RelativeLayout
@@ -134,7 +134,7 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginBottom="4dp"
-                android:text="Personnaliser votre demande"
+                android:text="@string/personnaliser_votre_demande"
                 android:textColor="#F1F1F1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -157,7 +157,7 @@
             android:layout_marginRight="18dp"
             android:layout_marginBottom="290dp"
             android:ems="10"
-            android:hint="Diamètre roues"
+            android:hint="@string/diametre_roues"
             android:inputType="number"
             android:textColor="#706E6E"
             tools:layout_editor_absoluteX="-101dp"
@@ -180,7 +180,7 @@
             android:layout_marginRight="173dp"
             android:layout_marginBottom="291dp"
             android:ems="10"
-            android:hint="Largeur"
+            android:hint="@string/largeur"
             android:inputType="number"
             android:textColor="#706E6E"
             tools:layout_editor_absoluteX="-101dp"
@@ -202,7 +202,7 @@
             android:layout_marginEnd="101dp"
             android:layout_marginRight="101dp"
             android:layout_marginBottom="252dp"
-            android:text="*En Centimètre"
+            android:text="@string/en_centimetre"
             android:textColor="#00ca9d"
             android:textSize="12sp" />
 
@@ -218,7 +218,7 @@
             android:layout_marginTop="140dp"
             android:layout_marginEnd="68dp"
             android:layout_marginBottom="344dp"
-            android:text="demande urgente"
+            android:text="@string/demande_urgente"
             android:textColor="#979090" />
 
     </RelativeLayout>

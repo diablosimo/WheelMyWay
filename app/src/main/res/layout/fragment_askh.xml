@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pattern"
+        android:focusableInTouchMode="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/personalDetailsCard"
+            style="@style/centreLocatorCardDesign"
+            android:layout_marginTop="50dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="640dp"
+                android:layout_gravity="center"
+                android:focusableInTouchMode="false"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <com.farbod.labelledspinner.LabelledSpinner
+                    android:id="@+id/your_labelled_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/type_aide"
+                    app:widgetColor="@color/primaryTextColor" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txtName"
+                        style="@style/modifiedEditText"
+                        android:hint="@string/name"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputMob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txtMob"
+                        style="@style/modifiedEditText"
+                        android:hint="@string/mobno"
+                        android:inputType="phone" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtInputFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/txtFeed"
+                        style="@style/modifiedEditText"
+                        android:hint="@string/message"
+                        android:inputType="textMultiLine"
+                        android:minLines="2" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Switch
+                    android:id="@+id/locationshared"
+                    style="@style/SCBSwitch"
+                    android:layout_width="215dp"
+                    android:layout_height="6dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="160dp"
+                    android:checked="true"
+                    android:switchMinWidth="56dp"
+                    android:text="@string/share_location"
+                    android:textColor="@color/primaryTextColor"
+                    android:textOff="OFF"
+                    android:textOn="ON" />
+
+                <Switch
+                    android:id="@+id/urgent"
+                    style="@style/SCBSwitch"
+                    android:layout_width="218dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="190dp"
+                    android:checked="true"
+                    android:switchMinWidth="56dp"
+                    android:text="@string/demande_urgente"
+                    android:textColor="@color/primaryTextColor"
+                    android:textOff="OFF"
+                    android:textOn="ON" />
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/centre_button"
+                    android:text="@string/send"
+                    android:textColor="@color/whiteTextColor" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

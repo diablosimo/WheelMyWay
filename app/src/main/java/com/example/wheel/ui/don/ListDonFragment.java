@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.wheel.MainActivity;
 import com.example.wheel.R;
 import com.example.wheel.model.Session;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +49,7 @@ public class ListDonFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        query = FirebaseDatabase.getInstance().getReference().child("demandeDon").orderByChild("handicape_id").equalTo(Integer.parseInt(session.getusename()));
+        query = FirebaseDatabase.getInstance().getReference().child("demandeDon").orderByChild("handicape_id").equalTo(MainActivity.user.getUid());
 
         query.addValueEventListener(new ValueEventListener() {
 
@@ -60,14 +61,14 @@ public class ListDonFragment extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     String titre = dataSnapshot1.child("titre").getValue(String.class);
                     String message = dataSnapshot1.child("message").getValue(String.class);
-                    long did = dataSnapshot1.child("demandeId").getValue(Long.class);
+                    String did = dataSnapshot1.child("demandeId").getValue(String.class);
 
                     String date = dataSnapshot1.child("datedemande").getValue(String.class);
 
                     DemandeDon d = new DemandeDon();
                     d.setMessage(message);
                     d.setDemandeId(did);
-                    d.setHandicape_id(Long.valueOf(session.getusename()));
+                    d.setHandicape_id(MainActivity.user.getUid());
 
                     d.setDatedemande(date);
 

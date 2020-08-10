@@ -96,10 +96,10 @@ public class add_accessibility extends AppCompatActivity {
                 assert a1 != null;
                 a1 = a1.substring(1, a1.length() - 1);
                 String[] aa = a1.split(",");
-                AccessibiliteRoute a = new AccessibiliteRoute(false, Float.parseFloat(aa[1]), Float.parseFloat(aa[0]), acc.getId());
+                AccessibiliteRoute a = new AccessibiliteRoute(false, Float.parseFloat(aa[1]), Float.parseFloat(aa[0]), acc.getNom(), acc.getId());
                 mtypeRef2.push().setValue(a);
                 setResult(Activity.RESULT_OK, returnIntent);
-                Toast.makeText(getApplicationContext(), "Accessibilité ajoutée", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.access_ajoutee), Toast.LENGTH_LONG).show();
                 finish();
             }
         });
